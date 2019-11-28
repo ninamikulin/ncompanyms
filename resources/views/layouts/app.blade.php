@@ -71,9 +71,23 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 p-4">
+
+                        @yield('content')
+            
+                        @if($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                @foreach($errors->all() as $error)
+                                    {{$error}}
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
