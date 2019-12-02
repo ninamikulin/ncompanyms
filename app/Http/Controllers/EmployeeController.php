@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\Employee;
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class CompanyController extends Controller
     public function index()
     {
         
-        return view('companies.index', ['companies'=> Company::all()]);
+        //return view('employees.index')
     }
 
     /**
@@ -25,7 +25,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        //
     }
 
     /**
@@ -34,68 +34,53 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-
-        Company::create($this->validateAttributes());
-
-        return redirect ('/companies');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Company  $company
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show(Employee $employee)
     {
-
-        return view('companies.show', ['company'=>$company]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Company  $company
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit(Employee $employee)
     {
-        return view('companies.edit', ['company'=>$company]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Company $company)
+    public function update(Request $request, Employee $employee)
     {
-        $company->update($this->validateAttributes());
-
-        return redirect('/companies');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Company  $company
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy(Employee $employee)
     {
-        $company->delete();
-        return redirect('/companies');
+        //
     }
-
-    public function validateAttributes()
-    {
-        return request()->validate([
-            'name'=> 'required',
-            'email' => 'required',
-            'website' => 'required']);
-    }    
 }

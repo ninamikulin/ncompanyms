@@ -18,7 +18,12 @@ Route::get('/', function () {
 Auth::routes(['register' =>false, 'reset'=>false]);
 
 Route::resource('companies', 'CompanyController');
-
+Route::get('companies/{company}/employees', 'CompanyEmployeesController@index');
+Route::post('companies/{company}/employees', 'CompanyEmployeesController@store');
+Route::get('companies/{company}/employees/create', 'CompanyEmployeesController@create');
+Route::get('companies/{company}/employees/{employee}/edit', 'CompanyEmployeesController@edit');
+Route::patch('companies/{company}/employees/{employee}', 'CompanyEmployeesController@update');
+Route::delete('companies/{company}/employees/{employee}', 'CompanyEmployeesController@destroy');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
