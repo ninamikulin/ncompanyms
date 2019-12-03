@@ -8,92 +8,76 @@ use Illuminate\Http\Request;
 
 class CompanyEmployeesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+
     public function index(Company $company)
     {
-        
-        return view('employees.index', ['company'=> $company]);
+        $this->authorize('view', $company);
+        $employees = Employee::where('company_id', $company->id)->paginate(10);
+
+        return view('employees.index', ['company'=> $company, 'employees'=> $employees]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(Company $company)
     {
+        $this->authorize('view', $company);
+
         return view('employees.create', ['company'=>$company]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Company $company, Employee $employee)
     {   
+        $this->authorize('view', $company);
+
         $attributes= $this->validateAttributes();
         $attributes['company_id'] = $company->id;
         
-        $employee->create($attributes);
+        $employee = $employee->create($attributes);
 
-        return redirect("/companies/{$company->id}/employees");
+        return redirect("/companies/{$company->id}/employees/{$employee->id}");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Employee $employee)
+    
+    public function show(Company $company, Employee $employee)
     {
-        //
+        $this->authorize('view', $company);
+
+        return view('employees.show', ['company'=> $company, 'employee'=>$employee]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Company $company, Employee $employee)
     {
+        $this->authorize('view', $employee);
+
         return view('employees.edit', ['employee'=>$employee]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Company $company, Employee $employee)
     {
         
-        $employee->update($this->validateAttributes());
+        $attributes= $this->validateAttributes();
+        $attributes['company_id'] = $company->id;
 
-        return redirect("companies/{$company->id}/employees");
+        $employee->update($attributes);
+
+        return redirect("companies/{$company->id}/employees/{$employee->id}");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
+
+    
     public function destroy(Company $company, Employee $employee)
-    {
+    {   
+        $this->authorize('view', $employee);
+
         $employee->delete();
         return redirect ("companies/{$company->id}/employees");
     }
 
+    
     public function validateAttributes()
     {
         return request()->validate([
