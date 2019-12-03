@@ -11,6 +11,6 @@ $factory->define(Employee::class, function (Faker $faker) {
         'first_name'=>$faker->firstName,
         'last_name'=>$faker->lastName,
         'email'=>$faker->email,
-        'phone'=>$faker->phoneNumber,
+        'phone'=>$faker->e164PhoneNumber,
     ];
 });
