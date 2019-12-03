@@ -3,93 +3,76 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
-    {
-        
-        return view('companies.index', ['companies'=> Company::all()]);
+    {   
+        if (auth()->user()->isAdmin()) {
+            $companies = Company::paginate(10);
+        }   
+        else{
+            $companies = Company::where('user_id', auth()->user()->id)->paginate(10);
+        }
+
+        return view('companies.index', ['companies'=> $companies]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
+        $this->authorize('view', Company::class);
         return view('companies.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
+
+    public function store(Company $company)
     {
+        $attributes=$this->validateAttributes();
+        $attributes['user_id'] = auth()->user()->id;
 
-        Company::create($this->validateAttributes());
+        $company = $company->create($attributes);
 
-        return redirect ('/companies');
+        return view("companies.show", ['company'=>$company]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Company $company)
     {
 
+        $this->authorize('view', $company);
         return view('companies.show', ['company'=>$company]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Company $company)
     {
+        $this->authorize('view', $company);
         return view('companies.edit', ['company'=>$company]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Company $company)
     {
-        $company->update($this->validateAttributes());
+        $attributes=$this->validateAttributes();
+        $attributes['user_id'] = auth()->user()->id;
 
-        return redirect('/companies');
+        $company = $company->update($attributes);
+        return view('companies.show', ['company'=>$company]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Company $company)
-    {
+    {   
+
         $company->delete();
         return redirect('/companies');
     }
+
 
     public function validateAttributes()
     {
