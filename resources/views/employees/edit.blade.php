@@ -5,7 +5,7 @@
 <div class="p-3">
     <h4>Update employee information</h4>
 </div>
-<div class="p-3">
+<div class="p-3 ">
 
     <form method="POST" action="/companies/{{$employee->company->id}}/employees/{{$employee->id}}">
     	@method('PATCH')
@@ -27,8 +27,9 @@
             <label for="phone">Phone number</label>
             <input type="number" name="phone" class="form-control" value="{{$employee->phone}}"required>
         </div>
-         
+      
         <button type="submit" class="btn btn-primary">Update</button> 
+
     </form>
     <form method="POST" action="/companies/{{$employee->company->id}}/employees/{{$employee->id}}"> @csrf @method('DELETE')<button type="submit" class="btn btn-primary mt-3">Delete</button></form>
 

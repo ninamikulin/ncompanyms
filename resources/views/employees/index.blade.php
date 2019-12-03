@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title">{{$company->name}} - Employees</h5>
     </div>
-@if ($company->employees->isNotEmpty())
+@if ($employees->isNotEmpty())
     <table class="table text-center p-3">
     	<thead>
 		   	<tr>
@@ -18,11 +18,9 @@
 			</tr>
 	   	</thead>
 	   	<tbody>
-	   		<?php $i = 0 ?>
-	   		@foreach($company->employees as $employee)
-		    <?php $i++ ?>
+	   		@foreach($employees as $key=> $employee)
 		    <tr>
-		      <td scope="row">{{ $i }}</td>
+		      <td scope="row">{{$employees->firstItem() + $key}}</td>
 		      <td>{{$employee->first_name}}</td>
 		      <td>{{$employee->last_name}}</td>
 		      <td>{{$employee->email}}</td>
@@ -36,8 +34,13 @@
 <li class="list-group-item text-center">{{$company->name}} doesn't have any employees yet.</li>
 @endif	
 </div>
-	<div class="mt-3">
+	<div class="mt-3 text-center">
 		<a href="/companies/{{$company->id}}/employees/create"><button type="submit" class="btn btn-primary">Add employee</button></a>
 	</div>
+	@if (!empty($employees->links()))
+	<div class="mt-3">
+		<div>{{ $employees->links() }}</div>
+	</div>
+@endif
 </div>
 @endsection
