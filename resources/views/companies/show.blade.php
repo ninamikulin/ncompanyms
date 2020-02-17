@@ -1,28 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card text-center">
-    <div class="card-body">
-        <h5 class="card-title">{{ $company->name }}</h5>
+
+<div class="text-center">
+    <div>
+    	<h1 class="mt-5 mb-3 p-3"><strong>{{$company->name}}</strong>
+    	</h1>
+    	<p class="p-1">Company added: {{$company->created_at->format('d-m-Y')}}</br>
+    	Company Email: {{$company->email}}</p>    	
+    	<div class="mb-3 mt-1">
+    		<a href="{{route('companies.edit', ['company'=> $company])}}"><button type="link" class="btn btn-primary mb-3">Edit company information </button></a>
+    	</div>
     </div>
+        
     <ul class="list-group list-group-flush">
     	<table class="table text-center p-3">
-    		<thead>
+    	<thead>
 		   	<tr>
+		   		<th scope="col">First Name</th>
+		   		<th scope="col">Last Name</th> 
 		   		<th scope="col">Email</th> 
-		   		<th scope="col">Website</th> 
-			   	<th scope="col">Employees</th>
+			   	<th scope="col">Phone</th>
+			   	<th scope="col">Employed since</th>
 			   	<th scope="col"></th>
 			</tr>
 	   	</thead>
+	   	@foreach($company->employees as $employee)
 	   	<tbody>
 	   		<tr>
-		      	<td>{{$company->email}}</th>
-			    <td><a href="{{'//' . $company->website}}">{{$company->website}}</a></td>
-			    <td><a href="/companies/{{$company->id}}/employees">{{count($company->employees)}}</a></td>
-			    <td><a href="{{route('companies.edit', ['company'=> $company])}}">Edit</a></td>
+	   			<td>{{$employee->first_name}}</th>
+		      	<td>{{$employee->last_name}}</th>
+		      	<td>{{$employee->email}}</th>
+				<td>{{$employee->phone}}</th>
+				<td>{{$employee->created_at->format('d-m-Y')}}</th>
+			    <td><a href="{{route('employees.edit', ['company'=> $company, 'employee' => $employee])}}">Edit</a></td>
 		    </tr>
+		</tbody>
+		@endforeach
     	</table>
+    	<a href="/companies/{{$company->id}}/employees/create"><button type="link" class="btn btn-primary">Add Employee</button></a>
  	</ul>
 </div>
 

@@ -10,6 +10,9 @@ class Company extends Model
 {
     protected $guarded=[];
 
+    protected $casts=[
+    	'created_at'=>'datetime'];
+
     public function employees()
     {
     	return $this->hasMany(Employee::class);

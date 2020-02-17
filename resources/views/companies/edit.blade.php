@@ -2,10 +2,12 @@
 
 @section('content')
 
-<div class="p-3">
-    <h4>Edit company</h4>
-</div>
-<div class="p-3">
+<div class="text-center">
+    <div>
+        <h1 class="mt-5 mb-3 p-3"><strong>Edit company</strong>
+        </h1>
+    </div>
+<div >
     <form method="POST" action="/companies/{{$company->id}}">
     	@method('PATCH')
         @csrf
@@ -23,15 +25,13 @@
             <input type="text" name="website" class="form-control" value="{{$company->website}}"required>
         </div>
          
-        <button type="submit" class="btn btn-primary">Submit</button>
-
-        
+        <button type="submit" class="btn btn-primary" style="width:100px;">Submit</button>  
     </form>
-    <form method="POST" action="/companies/{{$company->id}}">
-        @method('DELETE')
-        @csrf
-        <button class="btn btn-primary mt-2">Delete</button>
-    </form>
+     <form method="POST" action="/companies/{{$company->id}}">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger mt-1" style="width:100px;">Delete</button>
+        </form>
     
     
 </div>

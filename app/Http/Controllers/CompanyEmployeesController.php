@@ -8,15 +8,6 @@ use Illuminate\Http\Request;
 
 class CompanyEmployeesController extends Controller
 {
-    
-
-    public function index(Company $company)
-    {
-        $this->authorize('view', $company);
-        $employees = Employee::where('company_id', $company->id)->paginate(10);
-
-        return view('employees.index', ['company'=> $company, 'employees'=> $employees]);
-    }
 
 
     public function create(Company $company)
@@ -36,23 +27,15 @@ class CompanyEmployeesController extends Controller
         
         $employee = $employee->create($attributes);
 
-        return redirect("/companies/{$company->id}/employees/{$employee->id}");
+        return redirect("/companies/{$company->id}");
     }
 
-    
-    public function show(Company $company, Employee $employee)
-    {
-        $this->authorize('view', $company);
 
-        return view('employees.show', ['company'=> $company, 'employee'=>$employee]);
-    }
-
-    
     public function edit(Company $company, Employee $employee)
     {
         $this->authorize('view', $employee);
 
-        return view('employees.edit', ['employee'=>$employee]);
+        return view('employees.edit', ['company'=>$company,'employee'=>$employee]);
     }
 
     
@@ -64,7 +47,7 @@ class CompanyEmployeesController extends Controller
 
         $employee->update($attributes);
 
-        return redirect("companies/{$company->id}/employees/{$employee->id}");
+        return redirect("companies/{$company->id}");
     }
 
 

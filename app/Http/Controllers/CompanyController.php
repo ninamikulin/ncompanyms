@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Company;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,11 +13,12 @@ class CompanyController extends Controller
     public function index()
     {   
         if (auth()->user()->isAdmin()) {
-            $companies = Company::paginate(10);
+            $companies = Company::simplePaginate(10);
         }   
         else{
-            $companies = Company::where('user_id', auth()->user()->id)->paginate(10);
+            $companies = Company::where('user_id', auth()->user()->id)->simplePaginate(10);
         }
+
 
         return view('companies.index', ['companies'=> $companies]);
     }
@@ -30,9 +31,10 @@ class CompanyController extends Controller
     }
 
 
-    public function store(Company $company)
+    public function store(Company $company,Request $request)
     {
         $attributes=$this->validateAttributes();
+
         $attributes['user_id'] = auth()->user()->id;
 
         $company = $company->create($attributes);
@@ -45,6 +47,7 @@ class CompanyController extends Controller
     {
 
         $this->authorize('view', $company);
+
         return view('companies.show', ['company'=>$company]);
     }
 
@@ -61,7 +64,7 @@ class CompanyController extends Controller
         $attributes=$this->validateAttributes();
         $attributes['user_id'] = auth()->user()->id;
 
-        $company = $company->update($attributes);
+        $company->update($attributes);
         return view('companies.show', ['company'=>$company]);
     }
 
@@ -79,6 +82,7 @@ class CompanyController extends Controller
         return request()->validate([
             'name'=> 'required',
             'email' => 'required',
-            'website' => 'required']);
+            'website' => 'required',
+            ]);
     }    
 }

@@ -2,11 +2,14 @@
 
 @section('content')
 
-<div class="p-3">
-    <h4>Add a new company</h4>
-</div>
-<div class="p-3">
-    <form method="POST" action="/companies">
+<div class="text-center">
+    <div>
+        <h1 class="mt-5 mb-3 p-3"><strong>Add company</strong>
+        </h1>
+    </div>
+
+<div >
+    <form  method="POST" action="/companies">
         @csrf
         <div class="form-group">
             <label for="name">Name</label>
@@ -21,7 +24,7 @@
             <input type="text" name="website" class="form-control" placeholder="Company Website" value="{{old('website')}}" required>
         </div>
          
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary mt-3">Create</button>
     </form>
 </div>
 

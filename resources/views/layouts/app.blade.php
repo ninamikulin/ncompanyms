@@ -51,6 +51,15 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Companies <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/companies/create">New Company</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -66,6 +75,7 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endguest
                     </ul>
                 </div>
@@ -73,8 +83,10 @@
         </nav>
         <main class="py-4">
             <div class="container">
+
                 <div class="row justify-content-center">
-                    <div class="col-md-8 p-4">
+                    
+                    <div class="col-lg p-4">
 
                         @yield('content')
             
@@ -86,9 +98,19 @@
                             </div>
                         @endif
                     </div>
+
                 </div>
+            </div>
+            <div class="container">
+            @if (isset($companies))
+                        <div class="row justify-content-center">
+                            {{ $companies->links() }}
+                        </div>
+                        @endif
             </div>
         </main>
     </div>
+ 
 </body>
+
 </html>

@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="text-center">
+    <div>
+        <h1 class="mt-5 mb-3 p-3"><strong>Edit employee</strong>
+        </h1>
+    </div>
 
-<div class="p-3">
-    <h4>Update employee information</h4>
-</div>
-<div class="p-3 ">
-
+<div>
     <form method="POST" action="/companies/{{$employee->company->id}}/employees/{{$employee->id}}">
     	@method('PATCH')
         @csrf
@@ -27,12 +28,15 @@
             <label for="phone">Phone number</label>
             <input type="number" name="phone" class="form-control" value="{{$employee->phone}}"required>
         </div>
-      
-        <button type="submit" class="btn btn-primary">Update</button> 
 
+            <button type="submit" class="btn btn-primary" style="width:100px;">Update</button>      
     </form>
-    <form method="POST" action="/companies/{{$employee->company->id}}/employees/{{$employee->id}}"> @csrf @method('DELETE')<button type="submit" class="btn btn-primary mt-3">Delete</button></form>
 
+     <form method="POST" action="/companies/{{$company->id}}/employees/{{$employee->id}}">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger mt-1" style="width:100px;">Delete</button>
+        </form>
 </div>
 
 @endsection
