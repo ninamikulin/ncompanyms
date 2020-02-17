@@ -25,7 +25,8 @@
 			   	<th scope="col"></th>
 			</tr>
 	   	</thead>
-	   	@foreach($company->employees as $employee)
+	   	@if(isset($employees))
+	   	@foreach($employees as $employee)
 	   	<tbody>
 	   		<tr>
 	   			<td>{{$employee->first_name}}</th>
@@ -37,6 +38,7 @@
 		    </tr>
 		</tbody>
 		@endforeach
+		@endif
     	</table>
     	<a href="/companies/{{$company->id}}/employees/create"><button type="link" class="btn btn-primary">Add Employee</button></a>
  	</ul>

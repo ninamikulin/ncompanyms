@@ -103,10 +103,15 @@
             </div>
             <div class="container">
             @if (isset($companies))
-                        <div class="row justify-content-center">
-                            {{ $companies->links() }}
-                        </div>
-                        @endif
+            <div class="row justify-content-center">
+                {{ $companies->links() }}
+            </div>
+            @endif
+            @if (isset($employees))
+            <div class="row justify-content-center">
+                {{ $employees->links() }}
+            </div>
+            @endif
             </div>
         </main>
     </div>

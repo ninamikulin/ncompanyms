@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+	// mass assignable attributes
 	protected $guarded = [];
 
+	// casts attribute to assigned data types
 	protected $casts = [
     'created_at'  => 'date:d-m-Y'];
+ 
+    //-------------------------------------
+    // RELATIONSHIPS
+    //-------------------------------------
 
+    // belongs to one company
     public function company()
     {
     	return $this->belongsTo(Company::class);

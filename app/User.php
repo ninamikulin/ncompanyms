@@ -40,14 +40,20 @@ class User extends Authenticatable
     ];
 
 
+    //-------------------------------------
+    // RELATIONSHIPS
+    //-------------------------------------
+
+    // has many companies
     public function companies()
     {
         return $this->hasMany(Company::class);
     }
 
+    // checks if admin
     public function isAdmin()
     {
-        if ($this->id== 1)
+        if ($this->id == 1)
         {
             return true;
         }
