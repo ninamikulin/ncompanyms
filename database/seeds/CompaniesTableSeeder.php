@@ -1,6 +1,7 @@
 <?php
 
 use App\Company;
+use App\Employee;
 use Illuminate\Database\Seeder;
 
 class CompaniesTableSeeder extends Seeder
@@ -12,6 +13,8 @@ class CompaniesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Company::class,2)->create();
+        factory(App\Company::class, 5)->create()->each(function ($company) {
+        $company->employees()->saveMany(factory(App\Employee::class, 20)->make());
+    });
     }
 }
