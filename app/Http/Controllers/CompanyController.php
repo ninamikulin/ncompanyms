@@ -65,7 +65,7 @@ class CompanyController extends Controller
         //checks if search was performed, returns employees that match
         if (isset($_GET['search'])) {
             $employees = $company->employees()
-                ->whereRaw("UPPER(first_name) LIKE '%" . $_GET['search'] ."%'");  
+                ->whereRaw("UPPER(last_name) LIKE '%" . $_GET['search'] ."%'");  
         } else{
         // returns all the employees ordered by most recent and paginates the results 
             $employees = $company->employees()->latest();

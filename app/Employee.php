@@ -12,7 +12,7 @@ class Employee extends Model
 
 	// casts attribute to assigned data types
 	protected $casts = [
-    'created_at'  => 'date:d-m-Y'];
+    'created_at'  => 'datetime'];
  
     //-------------------------------------
     // RELATIONSHIPS
