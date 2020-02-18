@@ -20,13 +20,14 @@
 
 ## About 
 
-CompanyCMS is a simple CRUD website made with Laravel 6 that allows users to create an account/profile, add a company and company employees. 
+CompanyCMS is a simple CRUD website made with Laravel 6 that allows users to create an account add companies and manage company employees.
 
    * Basic Laravel login is used for creating accounts and authenticating users.  
    * Users can view, create, edit and delete their companies and employees. The admin of the website can view, edit and delete all companies and employees.  
-   * Laravel's auth middleware is used for checking if the user is authenticated.  
+   * Laravel's auth middleware is used for checking if the user is authenticated. 
+  * A policy is used to verify is a user has permissions to access company and employee information.  
    * A simple search for companies and employees has been implemented.  
-   * There are 5 main categories for articles (random, training, nutrition, grooming), eloquent relationships are created accordingly.
+
   
 
 ## Basic Laravel Auth
@@ -42,12 +43,14 @@ Create basic Laravel auth:
 ### Create
 
 To create a new company 2 `CompanyController` methods are used:
-- `create` -> returns view with form to create new company  
+
+- `create` -> returns view with form to create new company    
 
 <details> 
-<summary> store -> persists the new company in the DB  </summary>  
-- validates the request attributes    
-- persists the new company to the DB   
+<summary> store -> persists the new company in the DB  </summary> 
+
+- validates the request attributes       
+- persists the new company to the DB      
 
 ```php
 // /app/Http/Controllers/CompanyController.php
@@ -154,9 +157,10 @@ To update an existing company 2 `CompanyController` methods are used:
 - `edit` -> returns view with form to edit an existing company  
 
 <details> 
-<summary> update -> persists the changes to the company</summary>  
+<summary> update -> persists the changes to the company</summary> 
+
 - validates the request attributes  
-- persists the new company in the DB  
+- persists the new company in the DB    
 
 ```php
 // /app/Http/Controllers/CompanyController.php
@@ -206,12 +210,14 @@ public function destroy(Company $company)
 ### Create
 
 To create a new employee 2 `CompanyEmployeesController` methods are used:
-- `create` -> returns view with form to create new employee (passing the `$company` argument to the view)
+
+- `create` -> returns view with form to create new employee (passing the `$company` argument to the view)  
 
 <details> 
-<summary> store -> persists the new employee in the DB  </summary>  
-- validates the request attributes  
-- persists the new employee to the DB  
+<summary> store -> persists the new employee in the DB  </summary>
+
+- validates the request attributes    
+- persists the new employee to the DB    
 
 ```php
 // /app/Http/Controllers/CompanyEmployeeController.php
@@ -239,12 +245,13 @@ public function store(Company $company, Employee $employee)
 
 To update an existing employee 2 `CompanyEmployeesController` methods are used:
 
-- `edit` -> returns view with form to edit an existing employee
+- `edit` -> returns view with form to edit an existing employee  
 
 <details> 
-<summary> update -> persists the changes to the employee </summary>  
-- validates the request attributes    
-- persists the new company in the DB    
+<summary> update -> persists the changes to the employee </summary> 
+
+- validates the request attributes      
+- persists the new company in the DB      
 
 ```php
 // /app/Http/Controllers/CompanyEmployeeController.php
@@ -290,7 +297,8 @@ public function destroy(Company $company, Employee $employee)
 ## Eloquent relationships
 
 <details><summary>User</summary>
-- hasMany Companies  
+
+- hasMany Companies    
 
 ```php
 // has many companies
@@ -301,7 +309,7 @@ public function companies()
 
 ```
 
-- check if admin    
+- check if admin      
 
 ```php
 // checks if admin - user with id==1 is admin 
@@ -316,7 +324,8 @@ public function isAdmin()
 ``` 
 </details>
 <details><summary>Company</summary>
-- belongsTo one User  
+
+- belongsTo one User    
 
 ```php
 // belongs to one user
@@ -325,7 +334,7 @@ public function user()
 	return $this->belongsTo(User::class);
 }
 ```
-- hasMany Employees    
+- hasMany Employees     
 ```php
 // has many employees
 public function employees()
@@ -333,7 +342,7 @@ public function employees()
 	return $this->hasMany(Employee::class);
 }
 ```
-- casting attribute to datetime    
+- casting attribute to datetime      
 ```php
 // casts attribute to assigned data types
     protected $casts=[
@@ -342,7 +351,8 @@ public function employees()
 
 </details>
 <details><summary>Employee</summary>
-- belongsTo one company    
+
+- belongsTo one company      
 
 ```php
 // belongs to one company
@@ -356,7 +366,7 @@ public function company()
 
 ## Policy
 
-<details><summary>Company policy -> only auth users and admin can edit and delete a company</summary>
+<details><summary>Company policy -> only auth users and admin can edit and delete a company  </summary>
 
 ```php
 <?php
@@ -385,12 +395,12 @@ class CompanyPolicy
 <details><summary>Controller method  </summary>
 
 - check if search was performed  
-- queries the DB for all the employees    
+- queries the DB for all the employees whose last names contain specified characters    
 
 ```php
 // /app/Http/Controllers/CompanyController.php
 
-//checks if search was performed, returns employees whose last names contain the specified characters 
+//checks if search was performed, returns matching employees
 if (isset($_GET['search'])) {
 	$employees = $company->employees()
 	->whereRaw("UPPER(last_name) LIKE '%" . $_GET['search'] ."%'");
