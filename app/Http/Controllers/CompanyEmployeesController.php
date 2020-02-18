@@ -12,8 +12,6 @@ class CompanyEmployeesController extends Controller
     // returns view with a form to create new employee
     public function create(Company $company)
     {
-        // uses policy to authorize view
-        $this->authorize('view', $company);
 
         return view('employees.create', ['company'=>$company]);
     }
@@ -21,8 +19,6 @@ class CompanyEmployeesController extends Controller
     // persists the employee to the DB
     public function store(Company $company, Employee $employee)
     {   
-        // uses policy to authorize view
-        $this->authorize('view', $company);
 
         // server-side validation
         $attributes= $this->validateAttributes();
@@ -40,7 +36,7 @@ class CompanyEmployeesController extends Controller
     public function edit(Company $company, Employee $employee)
     {
         // uses policy to authorize view
-        $this->authorize('view', $employee);
+        $this->authorize('view', $company);
 
         return view('employees.edit', ['company'=>$company,'employee'=>$employee]);
     }
@@ -49,7 +45,7 @@ class CompanyEmployeesController extends Controller
     public function update(Company $company, Employee $employee)
     {
         // uses policy to authorize view
-        $this->authorize('view', $employee);
+        $this->authorize('view', $company);
 
         // server-side validation
         $attributes= $this->validateAttributes();
@@ -68,7 +64,7 @@ class CompanyEmployeesController extends Controller
     public function destroy(Company $company, Employee $employee)
     {   
         // uses policy to authorize view
-        $this->authorize('view', $employee);
+        $this->authorize('view', $company);
 
         // deletes the record
         $employee->delete();

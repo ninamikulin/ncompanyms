@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<form action="/companies/{{$company->id}}", method="GET">
+    <input  class="form-control" style="width:200px;" name="search" value="{{isset($_GET['search']) ? $_GET['search'] : 'Search'}}">
+</form>
 <div class="text-center">
     <div>
     	<h1 class="mt-5 mb-3 p-3"><strong>{{$company->name}}</strong>
@@ -43,5 +45,4 @@
     	<a href="/companies/{{$company->id}}/employees/create"><button type="link" class="btn btn-primary">Add Employee</button></a>
  	</ul>
 </div>
-
 @endsection
