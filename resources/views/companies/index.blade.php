@@ -21,6 +21,7 @@
 	   		<th scope="col"><h4>Company</h4></th>
 	   		<th scope="col"><h4>Website</h4></th> 
 		   	<th scope="col"><h4>Employees</h4></th>
+		   	<th scope="col"><h4>Owner</h4></th>
 		   	<th scope="col"></th>
 		</tr>
 		</thead>
@@ -31,19 +32,14 @@
    			<td><strong>{{$company->name}}</strong></th>
 		    <td><a href="{{'//' . $company->website}}">{{$company->website}}</a></td>
 		    <td>{{count($company->employees)}}</td>
+		    <td>{{$company->user->name}}</td>
 		    <td><a href="{{route('companies.show', ['company'=> $company])}}"><button type="link" class="btn btn-primary">More</button></a></td>
 	    </tr>
 	  </tbody>
 	  @endforeach
 </table>
-
-
-
 @else
 <li class="list-group-item text-center">No companies registered yet</li>
 @endif
 </div>
-
-
-
 @endsection
