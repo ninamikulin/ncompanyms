@@ -11,6 +11,6 @@ $factory->define(Company::class, function (Faker $faker) {
         'name'=>$faker->company,
         'email'=>$faker->email,
         'website'=>$faker->domainName,
-        'user_id'=>1,
+        'user_id'=>factory(User::class),
     ];
 });

@@ -5,5 +5,4 @@
     	<h5 class="card-title">You have been logged out</h5>
     </div>
  </div>
-
 @endsection
