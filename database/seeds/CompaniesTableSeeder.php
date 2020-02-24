@@ -15,6 +15,6 @@ class CompaniesTableSeeder extends Seeder
     {
         factory(App\Company::class, 5)->create()->each(function ($company) {
         $company->employees()->saveMany(factory(App\Employee::class, 20)->make());
-    });
+        });
     }
 }

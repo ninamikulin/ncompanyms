@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="text-center">
     <div>
         <h1 class="mt-5 mb-3 p-3"><strong>Add employee</strong>
@@ -25,8 +23,7 @@
         <div class="form-group">
             <label for="phone">Phone number</label>
             <input type="number" name="phone" class="form-control" placeholder="Phone Number" value="{{old('phone')}}"required>
-        </div>
-         
+        </div>       
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 </div>

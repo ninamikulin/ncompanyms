@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     // mass assignable attributes
-    protected $guarded=[];
+    protected $guarded = [];
 
     // casts attribute to assigned data types
-    protected $casts=[
-    	'created_at'=>'datetime'];
+    protected $casts = [
+    	'created_at' => 'datetime'
+    ];
 
     //-------------------------------------
     // RELATIONSHIPS

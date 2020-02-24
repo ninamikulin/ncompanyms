@@ -11,7 +11,6 @@
 |
 */
 
-
 // Basic auth routes
 Auth::routes();
 

@@ -8,18 +8,15 @@ use Illuminate\Http\Request;
 
 class CompanyEmployeesController extends Controller
 {
-
     // returns view with a form to create new employee
     public function create(Company $company)
     {
-
-        return view('employees.create', ['company'=>$company]);
+        return view('employees.create', ['company' => $company]);
     }
 
     // persists the employee to the DB
     public function store(Company $company, Employee $employee)
     {   
-
         // server-side validation
         $attributes= $this->validateAttributes();
 
@@ -32,23 +29,23 @@ class CompanyEmployeesController extends Controller
         return redirect("/companies/{$company->id}");
     }
 
-
+    // returns a view with a form to edit the record
     public function edit(Company $company, Employee $employee)
     {
         // uses policy to authorize view
         $this->authorize('view', $company);
 
-        return view('employees.edit', ['company'=>$company,'employee'=>$employee]);
+        return view('employees.edit', ['company' => $company, 'employee' => $employee]);
     }
 
-    
+    // updates the record in the DB   
     public function update(Company $company, Employee $employee)
     {
         // uses policy to authorize view
         $this->authorize('view', $company);
 
         // server-side validation
-        $attributes= $this->validateAttributes();
+        $attributes = $this->validateAttributes();
 
         // sets attributes
         $attributes['company_id'] = $company->id;
@@ -58,7 +55,6 @@ class CompanyEmployeesController extends Controller
 
         return redirect("companies/{$company->id}");
     }
-
 
     // deletes the employee from the DB
     public function destroy(Company $company, Employee $employee)
@@ -75,7 +71,7 @@ class CompanyEmployeesController extends Controller
     public function validateAttributes()
     {
         return request()->validate([
-            'first_name'=> 'required',
+            'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
             'phone' => 'required']);

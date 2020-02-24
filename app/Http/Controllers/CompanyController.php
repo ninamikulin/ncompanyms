@@ -15,22 +15,25 @@ class CompanyController extends Controller
     {   
         // if user is admin returns all companies
         if (auth()->user()->isAdmin()) {
-            $companies = Company::latest();             
+
+            $companies = Company::latest();                        
         }
         // else returns the companies that belong to the user   
         else{
+
             $companies = Company::where('user_id', auth()->id())->latest();  
         }
 
         //checks if search was performed, returns companies that match
         if (isset($_GET['search'])) {
-            $companies->whereRaw("UPPER(name) LIKE '%" . strtoupper($_GET['search']) . "%'");          
+
+            $companies->whereRaw("UPPER(name) LIKE '%" . strtoupper($_GET['search']) . "%'")
         }
 
         //orders by most recent and paginates the results
         $companies = $companies->paginate(10);
         
-        return view('companies.index', ['companies'=> $companies]);
+        return view('companies.index', ['companies' => $companies]);
     }
 
     // returns view with a form to create a company
@@ -45,7 +48,7 @@ class CompanyController extends Controller
     {
 
         // server-side validation
-        $attributes=$this->validateAttributes();
+        $attributes = $this->validateAttributes();
 
         // sets attributes
         $attributes['user_id'] = auth()->user()->id;
@@ -53,7 +56,7 @@ class CompanyController extends Controller
         // persits to DB
         $company = $company->create($attributes);
 
-        return view("companies.show", ['company'=>$company]);
+        return view('companies.show', ['company' => $company]);
     }
 
     // shows one company
@@ -64,29 +67,30 @@ class CompanyController extends Controller
 
         //checks if search was performed, returns employees that match
         if (isset($_GET['search'])) {
+
             $employees = $company->employees()
-                ->whereRaw("UPPER(last_name) LIKE '%" . $_GET['search'] ."%'");  
-        } else{
-        // returns all the employees ordered by most recent and paginates the results 
+                ->whereRaw("UPPER(last_name) LIKE '%" . $_GET['search'] . "%'"); 
+
+        } else {
+
+            // returns all the employees ordered by most recent and paginates the results 
             $employees = $company->employees()->latest();
         }
 
-        return view('companies.show', ['company'=>$company, 'employees'=> $employees->paginate(10)]);
+        return view('companies.show', ['company' => $company, 'employees' => $employees->paginate(10)]);
     }
 
     // returns view with a form to edit a company
     public function edit(Company $company)
-    {
-
-        return view('companies.edit', ['company'=>$company]);
+    { 
+        return view('companies.edit', ['company' => $company]);
     }
 
     // persists the changes to the DB
     public function update(Company $company)
     {
-
         // server-side validation
-        $attributes=$this->validateAttributes();
+        $attributes = $this->validateAttributes();
         
         // sets attributes
         $attributes['user_id'] = auth()->user()->id;
@@ -94,7 +98,7 @@ class CompanyController extends Controller
         // persists the changes
         $company->update($attributes);
 
-        return view('companies.show', ['company'=>$company]);
+        return view('companies.show', ['company' => $company]);
     }
 
     // deletes the compan from the DB
@@ -105,6 +109,7 @@ class CompanyController extends Controller
 
         // deletes from DB
         $company->delete();
+        
         return redirect('/companies');
     }
 
@@ -112,7 +117,7 @@ class CompanyController extends Controller
     public function validateAttributes()
     {
         return request()->validate([
-            'name'=> 'required',
+            'name' => 'required',
             'email' => 'required',
             'website' => 'required',
             ]);

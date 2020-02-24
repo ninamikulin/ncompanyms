@@ -11,6 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    // middleware to check if user is authorized
     public function __construct()
     {
     	$this->middleware('auth');

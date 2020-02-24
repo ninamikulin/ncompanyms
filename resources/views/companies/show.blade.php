@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <form action="/companies/{{$company->id}}", method="GET">
     <input  class="form-control" style="width:200px;" name="search" value="{{isset($_GET['search']) ? $_GET['search'] : 'Search'}}">
@@ -11,10 +10,9 @@
     	<p class="p-1">Company added: {{$company->created_at->format('d-m-Y')}}</br>
     	Company Email: {{$company->email}}</p>    	
     	<div class="mb-3 mt-1">
-    		<a href="{{route('companies.edit', ['company'=> $company])}}"><button type="link" class="btn btn-primary mb-3">Edit company information </button></a>
+    		<a href="{{route('companies.edit', ['company' => $company])}}"><button type="link" class="btn btn-primary mb-3">Edit company information </button></a>
     	</div>
-    </div>
-        
+    </div>      
     <ul class="list-group list-group-flush">
     	<table class="table text-center p-3">
     	<thead>
@@ -36,7 +34,7 @@
 		      	<td>{{$employee->email}}</th>
 				<td>{{$employee->phone}}</th>
 				<td>{{$employee->created_at->format('d-m-Y')}}</th>
-			    <td><a href="{{route('employees.edit', ['company'=> $company, 'employee' => $employee])}}">Edit</a></td>
+			    <td><a href="{{route('employees.edit', ['company' => $company, 'employee' => $employee])}}">Edit</a></td>
 		    </tr>
 		</tbody>
 		@endforeach
