@@ -27,7 +27,7 @@ class CompanyController extends Controller
         //checks if search was performed, returns companies that match
         if (isset($_GET['search'])) {
 
-            $companies->whereRaw("UPPER(name) LIKE '%" . strtoupper($_GET['search']) . "%'")
+            $companies->whereRaw("UPPER(name) LIKE '%" . strtoupper($_GET['search']) . "%'");
         }
 
         //orders by most recent and paginates the results
