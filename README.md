@@ -171,7 +171,7 @@ To update an existing company 2 `CompanyController` methods are used:
 // /app/Http/Controllers/CompanyController.php
 
 // persists the changes to the DB
-  public function update(Company $company)
+public function update(Company $company)
 {
   // server-side validation
   $attributes = $this->validateAttributes();
