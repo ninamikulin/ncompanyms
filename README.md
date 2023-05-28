@@ -1,4 +1,4 @@
-# CompanyCMS
+# CompanyMS
 
 1. [About](#about)   
 2. [Basic Laravel Auth](#basic-laravel-auth)   
